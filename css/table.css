@@ -1,0 +1,26 @@
+td,th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    }
+    
+    
+    tr:hover {background-color: #ddd;}
+    
+    th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    height: 70px;
+    text-align: center;
+    background-color: green;
+    color: white;
+    }
+    
+    table {
+      width: 100%;
+    }
+    
+    
+    td {
+      height: 70px;
+      text-align: right;
+    }

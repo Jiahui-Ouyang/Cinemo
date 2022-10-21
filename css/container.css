@@ -1,0 +1,11 @@
+.main-content .container {
+    position:center;
+    background: white;
+    top: 50%;
+    left: 50%;
+    border-radius: 5px;
+    padding-left:10px;
+    padding: 30px; 
+    width: auto;
+    height: 2200px;
+  }
