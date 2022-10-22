@@ -149,14 +149,14 @@ $payer_id = $_SESSION['userid'];
 								<label for="cname">Name on Card</label>
 								<input type="text" id="cname" name="cardname" placeholder="John More Doe">
 								<label for="ccnum">Credit card number</label>
-								<input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
+								<input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444" maxlength="16" style="width: 200px;">
 								<label for="expmonth">Exp Time (Month/ Year)</label>
-								<input type="month" id="exptime" name="exptime" placeholder="2022-10" min="2022-10">
+								<input type="month" id="exptime" name="exptime" placeholder="2022-10" min="2022-10" max="2030-10">
 								<br></br>
 								<div class="row">
 									<div class="col-50">
 										<label for="cvv">CVV</label>
-										<input type="text" id="cvv" name="cvv" placeholder="352">
+										<input type="text" id="cvv" name="cvv" placeholder="352" maxlength="3" size="5" style="width: 60px;">
 									</div>
 								</div>
 							</div>

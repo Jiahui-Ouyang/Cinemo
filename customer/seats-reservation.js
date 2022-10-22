@@ -2,7 +2,8 @@ const seats = document.querySelectorAll(".row .seat:not(.occupied)");
 const seatContainer = document.querySelector(".row-container");
 const count = document.getElementById("count");
 const total = document.getElementById("total");
-const movieSelect = document.getElementById("movie");
+// const seat_maintenance = document.querySelectorAll(".maintenance");
+// const movieSelect = document.getElementById("movie");
 
 // Another Approach
 
@@ -18,6 +19,7 @@ const movieSelect = document.getElementById("movie");
 // });
 
 //localStorage.clear();
+
 
 populateUI();
 updateSelectedCount();
@@ -53,7 +55,7 @@ function updateSelectedCount() {
 
   count.textContent = selectedSeatsCount;
   total.textContent = total_first_seats + total_second_seats;
-  localStorage.setItem("pp",total.textContent);
+  localStorage.setItem("pp", total.textContent);
 }
 
 // Get data from localstorage and populate
@@ -68,29 +70,30 @@ function populateUI() {
     });
   }
 
-  const selectedMovieIndex = localStorage.getItem("selectedMovieIndex");
+  // const selectedMovieIndex = localStorage.getItem("selectedMovieIndex");
 
-  if (selectedMovieIndex !== null) {
-    movieSelect.selectedIndex = selectedMovieIndex;
-  }
+  // if (selectedMovieIndex !== null) {
+  //   movieSelect.selectedIndex = selectedMovieIndex;
+  // }
 }
 
 // Movie select event
 
-movieSelect.addEventListener("change", function (e) {
-  //ticketPrice = +movieSelect.value;
-  setMovieData(e.target.selectedIndex, e.target.value);
-  updateSelectedCount();
-});
+// movieSelect.addEventListener("change", function (e) {
+//   //ticketPrice = +movieSelect.value;
+//   setMovieData(e.target.selectedIndex, e.target.value);
+//   updateSelectedCount();
+// });
 
-// Adding selected class to only non-occupied seats on 'click'
+// Adding selected class to non-occupied and non-maintenance seats on 'click'
 
 seatContainer.addEventListener("click", function (e) {
   if (
     e.target.classList.contains("seat") &&
-    !e.target.classList.contains("occupied")
+    (!e.target.classList.contains("occupied") || !e.target.classList.contains("maintenance"))
   ) {
     e.target.classList.toggle("selected");
+    // seat_maintenance.style.pointerEvents = 'none';
     updateSelectedCount();
   }
 });

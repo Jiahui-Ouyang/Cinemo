@@ -110,7 +110,8 @@ CREATE TABLE `room_template` (
   `f_seat_price` int(30) NOT NULL,
   `s_row_num` int (30) NOT NULL,
   `s_column_num` int (30) NOT NULL,
-  `s_seat_price` int(30) NOT NULL
+  `s_seat_price` int(30) NOT NULL,
+  `seats_maintenance` varchar(255)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -118,13 +119,13 @@ CREATE TABLE `room_template` (
 -- Dumping data for table `room_template`
 --
 
-INSERT INTO `room_template` (`room_template_id`, `theater_room_id`,`f_row_num`,`f_column_num`,`f_seat_price`,`s_row_num`,`s_column_num`,`s_seat_price`) VALUES
-(1,1,8,13,200,2,16,280),
-(2,2,13,16,220,4,20,300),
-(3,3,8,16,200,2,22,280),
-(5,4,10,13,260,3,18,340),
-(7,5,8,12,280,2,16,380),
-(8,6,13,18,220,5,22,260);
+INSERT INTO `room_template` (`room_template_id`, `theater_room_id`,`f_row_num`,`f_column_num`,`f_seat_price`,`s_row_num`,`s_column_num`,`s_seat_price`,`seats_maintenance`) VALUES
+(1,1,8,13,200,2,16,280,NULL),
+(2,2,13,16,220,4,20,300,NULL),
+(3,3,8,16,200,2,22,280,NULL),
+(5,4,10,13,260,3,18,340,NULL),
+(7,5,8,12,280,2,16,380,"109,110"),
+(8,6,13,18,220,5,22,260,NULL);
 
 -- --------------------------------------------------------
 --
@@ -137,7 +138,6 @@ CREATE TABLE `room_schedule` (
   `movie_idd` int (30) NOT NULL,
   `movie_showdate` date NOT NULL,
   `movie_showtime` time NOT NULL,
-  `seats_maintenance` varchar(255),
   `seats_booked` varchar(255)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -146,15 +146,15 @@ CREATE TABLE `room_schedule` (
 -- Dumping data for table `room_schedule`
 --
 
-INSERT INTO `room_schedule` (`room_schedule_id`, `theater_room_idd`,`movie_idd`,`movie_showdate`,`movie_showtime`,`seats_maintenance`,`seats_booked`) VALUES
-(1,1,1,'2022-10-20','11:40',NULL,'20,21'),
-(2,1,1,'2022-10-20','17:30',NULL,NULL),
-(3,1,4,'2022-10-19','19:20',NULL,'66,80,71'),
-(4,2,1,'2022-10-19','12:10','100,101,102','55,57,58,59'),
-(5,2,5,'2022-10-19','16:00','20,28',NULL),
-(6,2,6,'2022-10-19','19:50',NULL,'48,56'),
-(7,3,1,'2022-10-19','11:20',NULL,'18,20,26'),
-(8,4,1,'2022-10-20','11:20',NULL,NULL);
+INSERT INTO `room_schedule` (`room_schedule_id`, `theater_room_idd`,`movie_idd`,`movie_showdate`,`movie_showtime`,`seats_booked`) VALUES
+(1,1,1,'2022-10-26','11:40','20,21,100,101'),
+(2,1,1,'2022-10-26','17:30',NULL),
+(3,1,4,'2022-10-25','19:20','66,80,71,82,133'),
+(4,2,1,'2022-10-25','12:10','55,57,58,59'),
+(5,2,6,'2022-10-25','16:00',NULL),
+(6,2,6,'2022-10-25','19:50','48,56'),
+(7,3,1,'2022-10-25','11:20','18,20,26'),
+(8,4,1,'2022-10-226','11:20',NULL);
 
 -- --------------------------------------------------------
 --

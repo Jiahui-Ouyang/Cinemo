@@ -89,6 +89,7 @@ $sql = $conn->query("SELECT movies.title,movies.cover_img, book_history.book_his
 										<h5 class="w3-center">Seats booked:</h5>
 										<p class="w3-center"><?= $row['seat_chosen'] ?></p>
 										<button onclick="document.location='reviews.php?id=<?= $row['book_history_id'] ?>'">User Reviews and Ratings</button>
+										<button onclick="document.location='report_maintence.php?id=<?= $row['book_history_id'] ?>'">Feedback</button>
 									</div>
 								</div>
 							<?php } ?>

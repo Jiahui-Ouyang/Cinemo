@@ -11,9 +11,11 @@ $result = mysqli_query($conn, $sql);
 $movie = "SELECT movies.title, movies.cover_img FROM `room_schedule` JOIN movies WHERE room_schedule.movie_idd = movies.movie_id AND room_schedule.room_schedule_id = $room_schedule_id;";
 $result2 = mysqli_query($conn, $movie);
 $seat_id_num = 0;
+$alphabet = range('A', 'Z');
 
 while ($row = mysqli_fetch_array($result)) {
     $seat_booked = $row['seats_booked'];
+    $seat_maintenance = $row['seats_maintenance'];
     //$split = explode(',', $seat_booked);
     $f_row_num = $row['f_row_num'];
     $f_column_num = $row['f_column_num'];
@@ -22,8 +24,10 @@ while ($row = mysqli_fetch_array($result)) {
     $s_column_num = $row['s_column_num'];
     $s_seats_price = $row['s_seat_price'];
 
+
     // Stores in the session for sending to js
     $_SESSION['seats_booked'] = $seat_booked;
+    $_SESSION['seats_maintenance'] = $seat_maintenance;
     $_SESSION['first_row_number'] = $f_row_num;
     $_SESSION['first_column_number'] = $f_column_num;
     $_SESSION['first_seat_price'] = $f_seats_price;
@@ -46,6 +50,17 @@ while ($rows = mysqli_fetch_array($result2)) {
     break;
 }
 ?>
+<style>
+    td {
+        font-family: 'Inter', sans-serif;
+        font-size: calc(.6rem + .4vw);
+        margin-right: 10px;
+        /* font-size: 14px; */
+        font-family: helvetica, arial, tahoma;
+        font-weight: bold;
+    }
+</style>
+</style>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -59,12 +74,13 @@ while ($rows = mysqli_fetch_array($result2)) {
 
     <!-- Loading third party fonts -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 
     <!-- Loading main css file -->
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/seatingstyle.css">
-    <link rel="stylesheet" href="../css/payment.css">
+    <!-- <link rel="stylesheet" href="../css/payment.css"> -->
 
     <!--[if lt IE 9]>
 		<script src="js/ie-support/html5.js"></script>
@@ -112,7 +128,7 @@ while ($rows = mysqli_fetch_array($result2)) {
 
                     <div class="movie-container">
                         <select id="movie">
-                            <option value="500"><?php echo $moviename; ?></option>
+                            <option value=""><?php echo $moviename; ?></option>
                         </select>
                     </div>
 
@@ -126,9 +142,14 @@ while ($rows = mysqli_fetch_array($result2)) {
                             <small>Selected</small>
                         </li>
                         <li>
+                            <div class="seat maintenance"></div>
+                            <small>Under Maintenance</small>
+                        </li>
+                        <li>
                             <div class="seat occupied"></div>
                             <small>Occupied</small>
                         </li>
+
                     </ul>
 
                     <div class="movie-screen">
@@ -138,16 +159,20 @@ while ($rows = mysqli_fetch_array($result2)) {
                     <div class="row-container">
                         <?php for ($r = 0; $r < $f_row_num; $r++) {
                         ?>
+
                             <div class="row justify-content-center" id="standard">
+                                <td id="alaphabet"><?php echo $alphabet[$r]; ?></td>
                                 <?php for ($c = 0; $c < $f_column_num; $c++) {
                                     $seat_id_num++;
                                 ?>
                                     <div class="seat" id="<?php echo $seat_id_num; ?>"></div>
                                 <?php
                                 } ?>
+                                <td><?php echo $alphabet[$r]; ?></td>
                             </div>
                         <?php
                         } ?>
+                        <br />
                         <h5 class='subtitle'>Standard - <?php echo $f_seats_price; ?> Baht</h5>
                         <div class="row-container">
                             <?php
@@ -155,15 +180,18 @@ while ($rows = mysqli_fetch_array($result2)) {
                             for ($r = 0; $r < $s_row_num; $r++) {
                             ?>
                                 <div class="row justify-content-center" id="luxury">
+                                    <td><?php echo $alphabet[$r + $f_row_num]; ?></td>
                                     <?php for ($c = 0; $c < $s_column_num; $c++) {
                                         $seat_id_num++;
                                     ?>
                                         <div class="seat" id="<?php echo $seat_id_num; ?>"></div>
                                     <?php
                                     } ?>
+                                    <td><?php echo $alphabet[$r + $f_row_num]; ?></td>
                                 </div>
                             <?php
                             } ?>
+                            <br />
                             <h5 class='subtitle'>Luxury - <?php echo $s_seats_price; ?> Baht</h5>
                             <div class="text-center">
                                 <div class="text-wrapper">
@@ -185,6 +213,7 @@ while ($rows = mysqli_fetch_array($result2)) {
     </div> -->
                 <script>
                     const seat_booked = "<?php echo $_SESSION['seats_booked']; ?> ";
+                    const seat_maintenance = "<?php echo $_SESSION['seats_maintenance']; ?> ";
                     var first_row_number = parseInt("<?php echo $_SESSION['first_row_number']; ?>");
                     var first_column_number = parseInt("<?php echo $_SESSION['first_column_number']; ?>");
                     var first_seat_price = parseInt("<?php echo $_SESSION['first_seat_price']; ?>");
@@ -197,21 +226,44 @@ while ($rows = mysqli_fetch_array($result2)) {
                     //console.log("Fisrt : ", first_row_number, first_column_number, first_seat_price, );
                     //console.log("Second : ", second_row_number, second_column_number, second_seat_price);
                     //console.log("total-first-number : ", total_first_seats);
-                    // Get the num list of seat_booked from php connecting to the database:
 
-                    const array_seat_booked = seat_booked.split(",");
-                    for (let i = 0; i < array_seat_booked.length; i++) {
-                        var num = parseInt(array_seat_booked[i]);
-                        // Make the number is the same as the seat_booked in database become occupied status (add the classname "occupied")
-                        const occupiedSeats = document.getElementById(num);
-                        occupiedSeats.classList.add("occupied");
+                    function isEmptyOrSpaces(str) {
+                        return str === null || str.match(/^ *$/) !== null;
+                    }
+
+                    if (isEmptyOrSpaces(seat_maintenance)) {
+                        console.log("No seats in maintenance!");
+                    } else {
+                        const array_seat_maintenance = (seat_maintenance.split(","));
+                        for (let i = 0; i < array_seat_maintenance.length; i++) {
+                            var num = parseInt(array_seat_maintenance[i]);
+                            // Make the number is the same as the seat_booked in database become occupied status (add the classname "occupied")
+                            const maintenanceSeats = document.getElementById(num);
+                            maintenanceSeats.classList.add("maintenance", "occupied");
+
+                        }
+                    }
+
+
+                    // Get the num list of seat_booked from php connecting to the database:
+                    if (isEmptyOrSpaces(seat_booked)) {
+                        console.log("No seats in occupied!");
+                    } else {
+                        const array_seat_booked = seat_booked.split(",");
+                        for (let n = 0; n < array_seat_booked.length; n++) {
+                            var Num = parseInt(array_seat_booked[n]);
+                            // Make the number is the same as the seat_booked in database become occupied status (add the classname "occupied")
+                            const occupiedSeats = document.getElementById(Num);
+                            occupiedSeats.classList.add("occupied");
+                        }
                     }
                 </script>
                 <script src='seats-reservation.js'></script>
 
                 <div class="btn-next">
+
                     <!-- Pass to the payment page according to what value? -->
-                    <button onclick="document.location='payment.php?id=<?php echo $room_schedule_id;?>'">Next</button>
+                    <button onclick="document.location='payment.php?id=<?php echo $room_schedule_id; ?>'">Next</button>
                 </div>
             </div>
         </main>
@@ -236,9 +288,9 @@ while ($rows = mysqli_fetch_array($result2)) {
 
     </footer>
 
-    <script src="js/jquery-1.11.1.min.js"></script>
-    <script src="js/plugins.js"></script>
-    <script src="js/app.js"></script>
+    <script src="../js/jquery-1.11.1.min.js"></script>
+    <script src="../js/plugins.js"></script>
+    <script src="../js/app.js"></script>
 
 </body>
 
