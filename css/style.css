@@ -1,11 +1,10 @@
-.title {
-  font-family: sans-serif;
-}
+
+
 
 body {
   height: 100%;
   margin: 0;
-  background-color: black;
+  background-color: #050e28;
   height: 100%;
   background-position: center;
   background-repeat: no-repeat;
@@ -490,8 +489,8 @@ body {
 }
 
 .row {
-  margin-left: -15px;
-  margin-right: -15px;
+  
+  width: auto;
   *zoom: 1;
 }
 
@@ -660,7 +659,8 @@ footer {
 }
 
 .movie-list {
-  margin: 0 -15px;
+  margin: 20px 30px;
+  
 }
 
 .movie-list .movie {
@@ -779,3 +779,12 @@ footer {
 .btn-submit {
   text-align: center;
 }
+
+
+
+
+
+.title {
+  font-family: sans-serif;
+}
+

@@ -1,9 +1,11 @@
 <?php
-session_start();
+
 // if (!$_SESSION['userid']) {
 // 	header('location:../signin.php');
 // }
 include "auth.php";
+include('../head.php');
+include('../header.php');
 require "../db_connect.php";
 $book_history_id = $_GET['id'];
 
@@ -54,6 +56,47 @@ while ($row = mysqli_fetch_array($result)) {
 //     break;
 // }
 ?>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script type="text/javascript" src="assets/js/calendar7.js"></script>
+
+
+<!-- Delete if necessary  
+<link href="css/fullcalendar.css" rel="stylesheet" />
+
+<link href="css/fullcalendar.print.css" rel="stylesheet" media="print" />
+
+<script src="js/moment.min.js"></script>
+
+<script src="js/fullcalendar.js"></script>-->
+
+
+
+<!-- Right now I'm using this boostrap  -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.20.0/css/mdb.min.css" rel="stylesheet" />
+<link href="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/docs-app/css/compiled-4.20.0.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet" />
+
+
+
+<!-- Right now I'm using this boostrap (Major Changes) -->
+<!--<link href="https://cdnjs.cloudflare.com/ajax/libs/cascade-framework/1.5.0/css/core.min.css" rel="stylesheet" />-->
+
+
+
+    
+
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/js/all.min.js"></script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.20.0/js/mdb.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 <style>
     .seat .chosen {
         background-color: #FF3D9E;
@@ -75,7 +118,8 @@ while ($row = mysqli_fetch_array($result)) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 
     <!-- Loading main css file -->
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/style2.css">
+	<link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/seatingstyle.css">
     <link rel="stylesheet" href="../css/payment.css">
 
@@ -88,36 +132,70 @@ while ($row = mysqli_fetch_array($result)) {
 
 
 <body>
-    <div id="site-content">
-        <header class="site-header">
-            <div class="container">
-                <a href="index.html" id="branding">
-                    <img src="../images/Cinemo Logo.JPG" alt="logo" class="logo" width="150">
-                </a> <!-- #branding -->
 
-                <div class="main-navigation">
-                    <button type="button" class="menu-toggle"><i class="fa fa-bars"></i></button>
-                    <ul class="menu">
-                        <li class="menu-item"><a href="home.php">Home</a></li>
-                        <li class="menu-item"><a href="aboutpage.php">About</a></li>
-                        <li class="menu-item"><a href="allmovies.php">Movies</a></li>
-                        <li class="menu-item"><a href="historypage.php">History</a></li>
-                        <li class="menu-item"><a href="../signout.php">Log Out</a></li>
-                    </ul> <!-- .menu -->
-                </div> <!-- .main-navigation -->
-        </header>
+	
+		<header class="site-header">
+			<div class="container">
+				<a href="index.html" id="branding">
+					<img src="../images/Cinemo_Logo.png" alt="logo" class="logo" width="150" height="150">
+				</a> <!-- #branding -->
+
+				
+		</header>
+
+		<div class="main-navigation">
+					<button type="button" class="menu-toggle"><i class="fa fa-bars"></i></button>
+					<ul class="menu">
+						<li class="menu-item"><a href="home.php">Home</a></li>
+						<li class="menu-item"><a href="aboutpage.php">About</a></li>
+						<li class="menu-item"><a href="allmovies.php">Movies</a></li>
+						<li class="menu-item"><a href="historypage.php">History</a></li>
+						<li class="menu-item"><a href="../signout.php">Log Out</a></li>
+					</ul> <!-- .menu -->
+				</div>
+</div> 
 
         <!-- .main-navigation -->
 
         <!-- Page content -->
 
         <!-- List of Movies Section -->
-        <main class="main-content">
-            <div class="container">
-                <div class="page">
-                    <div class="row">
-                        <div class="title">
-                            <h1 class="w3-center">Reporting Seating Issues</h1>
+        <div class="page-wrapper">
+				
+			
+                <!-- Bread crumb -->
+                
+                
+                        
+                    
+                </div>
+                
+                <!-- End Bread crumb -->
+                
+    
+                <!-- Container fluid  -->
+                <div class="container-fluid">
+                    
+                
+                    
+                    
+    
+    
+                        <div class="row ">
+                        <div class="card" id="latest movies">
+						<div class="card-body">
+                        <button class="btn btn-dark btn-lg" onclick="history.go(-1);"><i class="fas fa-arrow-left"></i><b></button></b>
+						<div class="bg-image .hover-zoom d-flex justify-content-center align-items-center" style="
+    background-image: url('https://www.xmple.com/wallpaper/black-gradient-blue-linear-1920x1080-c2-0e1748-020307-a-330-f-14.svg');
+    height: 125px; width: auto;
+  ">
+  
+  <h1 class="color-white mb-3 h1"><b>Reporting Seating Issues</b></h1>
+</div>
+						</div>
+							<div class="row">
+							<div class="title">
+                            
                             <h3 class="w3-center"><?php echo $moviename; ?></h3>
                         </div>
                         <img src="../images/<?php echo $img; ?>" alt="HTML5 Icon" style="width:300px;height:300px;" class="img-center">
@@ -191,6 +269,7 @@ while ($row = mysqli_fetch_array($result)) {
                         </div>
 
                     </div>
+                    <button  onclick="document.location='payment.php?id=<?php echo $room_schedule_id; ?>'">Confirm</button>
                 </div>
 
 
@@ -226,32 +305,29 @@ while ($row = mysqli_fetch_array($result)) {
                 </script>
                 <script src='report_maintence.js'></script>
 
-                <div class="btn-next">
+                
                     <!-- Pass to the payment page according to what value? -->
-                    <button onclick="document.location='payment.php?id=<?php echo $room_schedule_id; ?>'">Confirm</button>
-                </div>
-            </div>
+                    
+              
         </main>
     </div>
     </main>
-    </div> <!-- .container -->
-    </div>
+    
     <!-- Default snippet for navigation -->
 
-    <footer class="site-footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-2">
-                    <div class="widget">
-                        <h3 class="widget-title">About Us</h3>
-                        <p>Cinemo is a web application which used by a particular movie theater business. </p>
-                    </div>
-                </div>
-            </div>
-            <div class="colophon">Copyright 2022 Cinemo</div>
-        </div> <!-- .container -->
-
-    </footer>
+    <div class="card" id="latest movies">
+						<div class="card-body">
+						</div>
+							<h1 class="color-black mb-3 h1"><b>About Us</b></h1>
+							<p>
+							<h3 class="color-black mb-3 h6">Cinemo is a web application which used by a particular movie theater business. </h3></p>
+							<h3 class="color-black mb-3 h6">Copyright 2022 Cinemo
+						</div>
+					</div>
+					</div>
+					</div>
+					</div>
+					</div>
 
     <script src="js/jquery-1.11.1.min.js"></script>
     <script src="js/plugins.js"></script>
